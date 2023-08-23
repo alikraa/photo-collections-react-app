@@ -16,66 +16,10 @@
   margin-bottom: 75px;
 }
 
-.categories {
-  display: flex;
-  justify-content: space-between;
-
-  ul {
-    display: flex;
-
-    li {
-      @include field;
-      margin-right: 20px;
-      cursor: pointer;
-
-      &:hover,
-      &:active {
-        @include active;
-        cursor: pointer;
-      }
-
-      &:active {
-        background-color: #414141;
-      }
-    }
-  }
-
-  input {
-    @include field;
-  }
-}
-
 .collections {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-column-gap: 40px;
-}
-
-.collection {
-  @include collection;
-
-  img {
-    width: 100px;
-    height: 100px;
-
-    &.img-1 {
-      grid-column-start: 1;
-      grid-column-end: 4;
-    }
-  }
-
-  h4 {
-    font-size: 32px;
-    font-weight: 600;
-    text-align: center;
-
-    grid-column-start: 1;
-    grid-column-end: 4;
-  }
-
-  &:last-child {
-    margin-bottom: 0;
-  }
 }
 
 .pagination {

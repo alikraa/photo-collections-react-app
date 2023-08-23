@@ -1,0 +1,30 @@
+@import '../../mixins.scss';
+
+.categories {
+  display: flex;
+  justify-content: space-between;
+
+  ul {
+    display: flex;
+
+    li {
+      @include field;
+      margin-right: 20px;
+      cursor: pointer;
+
+      &:hover,
+      &:active {
+        @include active;
+        cursor: pointer;
+      }
+
+      &:active {
+        background-color: #414141;
+      }
+    }
+  }
+
+  input {
+    @include field;
+  }
+}
