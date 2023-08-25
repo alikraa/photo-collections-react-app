@@ -1,28 +1,43 @@
+import { useEffect, useState } from 'react';
 import { Header } from './components/header/header.tsx';
 import { Collection } from './components/collection/collection.tsx';
-import { mockData, pageNumbers } from './ts/view.ts';
+import { CollectionData, CategoriesData } from './ts/interfaces.ts';
+import { serverRequest } from './ts/request.ts';
+import { pageNumbers } from './ts/view.ts';
 import './app.scss';
 
 function App() {
+  const [categories, setCategories] = useState<CategoriesData[]>([]);
+  const [collections, setCollections] = useState<CollectionData[]>([]);
+
+  useEffect(() => {
+    serverRequest(
+      'https://64e8a27b99cf45b15fdfe66d.mockapi.io/photo_collections'
+    ).then((json) => {
+      setCategories(json[0].categories);
+      setCollections(json[0].collections);
+    });
+  }, []);
+
   return (
     <div className="photo-collections-app">
       <h1 className="header">Моя коллекция фотографий</h1>
       <div className="photo-collections-app__content">
-        <Header />
+        <Header categories={categories} />
         <div className="collections">
-          {mockData.map((item) => (
+          {collections.map((item) => (
             <Collection
               key={item.id}
-              img1={item.img1}
-              img2={item.img2}
-              img3={item.img3}
-              img4={item.img4}
-              header={item.header}
+              img1={item.photos[0]}
+              img2={item.photos[1]}
+              img3={item.photos[2]}
+              img4={item.photos[3]}
+              header={item.name}
             />
           ))}
         </div>
         {pageNumbers.map((item) => (
-          <button type="button" className="pagination">
+          <button key={item} type="button" className="pagination">
             {item}
           </button>
         ))}

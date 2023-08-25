@@ -6,4 +6,19 @@ interface CollectionProps {
   header: string;
 }
 
-export type { CollectionProps };
+interface CollectionData {
+  id: number;
+  category: number;
+  name: string;
+  photos: string[];
+}
+
+interface CategoriesData {
+  name: string;
+}
+
+interface HeaderProps {
+  categories: CategoriesData[];
+}
+
+export type { CollectionProps, CollectionData, CategoriesData, HeaderProps };

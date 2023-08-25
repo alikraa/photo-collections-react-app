@@ -1,12 +1,12 @@
-import { categories } from '../../ts/view.ts';
+import { HeaderProps } from '../../ts/interfaces.ts';
 import './header.scss';
 
-function Header() {
+function Header({ categories }: HeaderProps) {
   return (
     <div className="categories">
       <ul>
         {categories.map((item) => (
-          <li key={item}>{item}</li>
+          <li key={item.name}>{item.name}</li>
         ))}
       </ul>
       <input type="text" placeholder="Поиск по названию" />
