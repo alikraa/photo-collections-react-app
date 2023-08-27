@@ -10,6 +10,8 @@ function App() {
   const [categories, setCategories] = useState<CategoriesData[]>([]);
   const [collections, setCollections] = useState<CollectionData[]>([]);
 
+  const [searchValue, setSearchValue] = useState('');
+
   useEffect(() => {
     serverRequest(
       'https://64e8a27b99cf45b15fdfe66d.mockapi.io/photo_collections'
@@ -23,18 +25,26 @@ function App() {
     <div className="photo-collections-app">
       <h1 className="header">Моя коллекция фотографий</h1>
       <div className="photo-collections-app__content">
-        <Header categories={categories} />
+        <Header
+          categories={categories}
+          handleChange={setSearchValue}
+          currentValue={searchValue}
+        />
         <div className="collections">
-          {collections.map((item) => (
-            <Collection
-              key={item.id}
-              img1={item.photos[0]}
-              img2={item.photos[1]}
-              img3={item.photos[2]}
-              img4={item.photos[3]}
-              header={item.name}
-            />
-          ))}
+          {collections
+            .filter((item) =>
+              item.name.toLowerCase().includes(searchValue.toLowerCase())
+            )
+            .map((item) => (
+              <Collection
+                key={item.id}
+                img1={item.photos[0]}
+                img2={item.photos[1]}
+                img3={item.photos[2]}
+                img4={item.photos[3]}
+                header={item.name}
+              />
+            ))}
         </div>
         {pageNumbers.map((item) => (
           <button key={item} type="button" className="pagination">

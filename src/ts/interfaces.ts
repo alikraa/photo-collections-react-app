@@ -19,6 +19,8 @@ interface CategoriesData {
 
 interface HeaderProps {
   categories: CategoriesData[];
+  handleChange: (event: string) => void;
+  currentValue: string;
 }
 
 export type { CollectionProps, CollectionData, CategoriesData, HeaderProps };
