@@ -12,6 +12,10 @@
       margin-right: 20px;
       cursor: pointer;
 
+      &.active {
+        @include active;
+      }
+
       &:hover,
       &:active {
         @include active;

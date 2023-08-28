@@ -21,6 +21,8 @@ interface HeaderProps {
   categories: CategoriesData[];
   handleChange: (event: string) => void;
   currentValue: string;
+  currentCategory: number;
+  setCurrentCategory: (arg0: number) => void;
 }
 
 export type { CollectionProps, CollectionData, CategoriesData, HeaderProps };

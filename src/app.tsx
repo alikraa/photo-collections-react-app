@@ -11,14 +11,22 @@ function App() {
   const [collections, setCollections] = useState<CollectionData[]>([]);
 
   const [searchValue, setSearchValue] = useState('');
+  const [currentCategory, setCurrentCategory] = useState(0);
 
   useEffect(() => {
     serverRequest(
-      'https://64e8a27b99cf45b15fdfe66d.mockapi.io/photo_collections'
+      `https://64e8a27b99cf45b15fdfe66d.mockapi.io/photo_collections?${
+        currentCategory ? `category=${currentCategory}` : ''
+      }`
     ).then((json) => {
-      setCategories(json[0].categories);
-      setCollections(json[0].collections);
+      setCollections(json);
     });
+  }, [currentCategory]);
+
+  useEffect(() => {
+    serverRequest(
+      'https://64e8a27b99cf45b15fdfe66d.mockapi.io/photo_categories'
+    ).then((json) => setCategories(json));
   }, []);
 
   return (
@@ -29,6 +37,8 @@ function App() {
           categories={categories}
           handleChange={setSearchValue}
           currentValue={searchValue}
+          currentCategory={currentCategory}
+          setCurrentCategory={setCurrentCategory}
         />
         <div className="collections">
           {collections
