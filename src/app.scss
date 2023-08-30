@@ -25,6 +25,10 @@
 .pagination {
   @include page;
 
+  &.active {
+    @include active;
+  }
+
   &:hover,
   &:active {
     @include active;

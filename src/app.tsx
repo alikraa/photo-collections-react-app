@@ -13,15 +13,17 @@ function App() {
   const [searchValue, setSearchValue] = useState('');
   const [currentCategory, setCurrentCategory] = useState(0);
 
+  const [page, setPage] = useState(pageNumbers[0]);
+
   useEffect(() => {
     serverRequest(
       `https://64e8a27b99cf45b15fdfe66d.mockapi.io/photo_collections?${
         currentCategory ? `category=${currentCategory}` : ''
-      }`
+      }&page=${page}&limit=3`
     ).then((json) => {
       setCollections(json);
     });
-  }, [currentCategory]);
+  }, [currentCategory, page]);
 
   useEffect(() => {
     serverRequest(
@@ -57,7 +59,12 @@ function App() {
             ))}
         </div>
         {pageNumbers.map((item) => (
-          <button key={item} type="button" className="pagination">
+          <button
+            key={item}
+            type="button"
+            className={`pagination ${page === item ? 'active' : ''}`}
+            onClick={() => setPage(item)}
+          >
             {item}
           </button>
         ))}
