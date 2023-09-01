@@ -14,15 +14,18 @@ function App() {
   const [currentCategory, setCurrentCategory] = useState(0);
 
   const [page, setPage] = useState(pageNumbers[0]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     serverRequest(
       `https://64e8a27b99cf45b15fdfe66d.mockapi.io/photo_collections?${
         currentCategory ? `category=${currentCategory}` : ''
       }&page=${page}&limit=3`
-    ).then((json) => {
-      setCollections(json);
-    });
+    )
+      .then((json) => {
+        setCollections(json);
+      })
+      .finally(() => setIsLoading(false));
   }, [currentCategory, page]);
 
   useEffect(() => {
@@ -43,20 +46,30 @@ function App() {
           setCurrentCategory={setCurrentCategory}
         />
         <div className="collections">
-          {collections
-            .filter((item) =>
-              item.name.toLowerCase().includes(searchValue.toLowerCase())
-            )
-            .map((item) => (
-              <Collection
-                key={item.id}
-                img1={item.photos[0]}
-                img2={item.photos[1]}
-                img3={item.photos[2]}
-                img4={item.photos[3]}
-                header={item.name}
+          {isLoading ? (
+            <div className="loader">
+              <img
+                className="loader__icon"
+                src="./loader-icon.svg"
+                alt="Loader"
               />
-            ))}
+            </div>
+          ) : (
+            collections
+              .filter((item) =>
+                item.name.toLowerCase().includes(searchValue.toLowerCase())
+              )
+              .map((item) => (
+                <Collection
+                  key={item.id}
+                  img1={item.photos[0]}
+                  img2={item.photos[1]}
+                  img3={item.photos[2]}
+                  img4={item.photos[3]}
+                  header={item.name}
+                />
+              ))
+          )}
         </div>
         {pageNumbers.map((item) => (
           <button
